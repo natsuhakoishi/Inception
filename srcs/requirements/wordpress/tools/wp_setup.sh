@@ -7,11 +7,13 @@ then
 	mv wp-cli.phar /usr/local/bin/wp
 fi
 
-if [ ! -d "/var/www/html/wordpress" ];
-then
-	mkdir /var/www/html/wordpress
-	echo "Wordpress Directory Created"
-fi
+# if [ ! -d "/var/www/html/wordpress" ];
+# then
+# 	mkdir /var/www/html/wordpress
+# 	echo "Wordpress Directory Created"
+# fi
+
+mkdir -p /var/www/html/wordpress
 
 if [ -z "$(ls -A /var/www/html/wordpress)" ];
 then
