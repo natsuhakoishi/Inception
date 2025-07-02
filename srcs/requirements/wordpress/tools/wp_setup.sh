@@ -7,15 +7,9 @@ then
 	mv wp-cli.phar /usr/local/bin/wp
 fi
 
-# if [ ! -d "/var/www/html/wordpress" ];
-# then
-# 	mkdir /var/www/html/wordpress
-# 	echo "Wordpress Directory Created"
-# fi
-
 mkdir -p /var/www/html/wordpress
 
-if [ -z "$(ls -A /var/www/html/wordpress)" ];
+if [ ! -f "/var/www/html/wordpress/wp-config.php" ];
 then
 	wp core download --path=/var/www/html/wordpress --allow-root
 	echo "Wordpress Core Downloaded"
@@ -27,7 +21,10 @@ then
 		--dbpass=$DB_UPASS \
 		--allow-root
 	echo "wp-config.php Created"
+fi
 
+if ! wp core is-installed --path=/var/www/html/wordpress --allow-root;
+then
 	wp core install --path=/var/www/html/wordpress \
 		--url=$DOMAIN_NAME \
 		--title="I hate Inception" \
