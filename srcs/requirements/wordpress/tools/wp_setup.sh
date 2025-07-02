@@ -23,6 +23,14 @@ then
 	echo "wp-config.php Created"
 fi
 
+echo "Waiting for MariaDB to be ready..."
+until mysql -hmariadb -u$DB_USER -p$DB_UPASS -e "SHOW DATABASES;" &> /dev/null
+do
+  echo "MariaDB not ready, waiting..."
+  sleep 2
+done
+echo "MariaDB is ready."
+
 if ! wp core is-installed --path=/var/www/html/wordpress --allow-root;
 then
 	wp core install --path=/var/www/html/wordpress \
