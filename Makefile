@@ -28,7 +28,7 @@ re: fclean all
 # VM
 # scp -r ~/42cp/wip/Inception natsuhakoishi@192.168.1.127:~/	           //send file to VM
 # ssh natsuhakoishi@192.168.1.127                                          //connect to VM
-# docker context update inception-vm --docker "ssh://natsuhakoishi@new_ip" //change ssh link ip if vm ip diff
+# docker context update inception-vm --docker "host=ssh://natsuhakoishi@192.168.1.127" //change ssh link ip if vm ip diff
 
 # docker
 # docker ps (ls container)
