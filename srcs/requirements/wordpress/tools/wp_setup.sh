@@ -17,8 +17,8 @@ then
 	wp core config --path=/var/www/html/wordpress \
 		--dbhost=mariadb \
 		--dbname=$DB_NAME \
-		--dbuser=$DB_ADMIN \
-		--dbpass=$DB_APASS \
+		--dbuser=$DB_USER \
+		--dbpass=$DB_UPASS \
 		--allow-root
 	echo "wp-config.php Created"
 fi
