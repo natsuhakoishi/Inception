@@ -1,5 +1,11 @@
 #!/bin/bash
 
+until mysql -hmariadb -u$DB_USER -p$DB_UPASS -e "SHOW DATABASES;" &> /dev/null
+do
+  echo "Waiting for mariadb..."
+  sleep 2
+done
+
 if [ ! -a "wp-cli.phar" ];
 then
 	wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
