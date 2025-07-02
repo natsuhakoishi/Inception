@@ -7,6 +7,8 @@ then
 	mv wp-cli.phar /usr/local/bin/wp
 fi
 
+sleep 10
+
 mkdir -p /var/www/html/wordpress
 
 if [ ! -f "/var/www/html/wordpress/wp-config.php" ];
