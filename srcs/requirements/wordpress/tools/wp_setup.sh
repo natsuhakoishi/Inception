@@ -13,7 +13,7 @@ then
 	echo "Wordpress Directory Created"
 fi
 
-if [ ! -z "$(ls -A /var/www/html/wordpress)" ];
+if [ -z "$(ls -A /var/www/html/wordpress)" ];
 then
 	wp core download --path=/var/www/html/wordpress --allow-root
 	echo "Wordpress Core Downloaded"
