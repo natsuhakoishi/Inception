@@ -7,6 +7,12 @@ then
 	mv wp-cli.phar /usr/local/bin/wp
 fi
 
+echo "Waiting for mariadb to be ready..."
+until mysqladmin ping -hmariadb --silent; do
+	sleep 2
+done
+echo "mariadb is up."
+
 mkdir -p /var/www/html/wordpress
 
 if [ ! -f "/var/www/html/wordpress/wp-config.php" ];
