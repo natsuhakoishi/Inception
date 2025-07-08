@@ -21,7 +21,7 @@ then
 	--dbhost=mariadb --dbname=$DB_NAME \
 	--dbuser=$DB_USER --dbpass=$DB_PASS \
 	--allow-root
-	echo "wp-config created"
+	echo "wp-config.php created"
 
 	chmod 644 /requirements/wordpress/wpf/wp-config.php
 

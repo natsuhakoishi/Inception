@@ -8,10 +8,10 @@ all: re
 
 build:
 	if [ ! -d $(MOUNTPOINT)$(WP_DB_DIR) ]; then\
-		mkdir -p $(MOUNTPOINT)$(WP_DB_DIR);\
+		sudo mkdir -p $(MOUNTPOINT)$(WP_DB_DIR);\
 	fi
 	if [ ! -d $(MOUNTPOINT)$(WP_FL_DIR) ]; then\
-		mkdir -p $(MOUNTPOINT)$(WP_FL_DIR);\
+		sudo mkdir -p $(MOUNTPOINT)$(WP_FL_DIR);\
 	fi
 
 	docker compose -f $(DC) build
@@ -34,6 +34,10 @@ fclean:
 	docker rmi $(shell docker images -qa) 2>/dev/null || true
 	docker volume rm $(shell docker volume ls -q) 2>/dev/null || true
 	docker network rm $(shell docker network ls -q) 2>/dev/null || true
+
+vclean:
+	sudo rm -rf /home/yyean-wa/data/wordpress_database/*
+	sudo rm -rf /home/yyean-wa/data/wordpress_files/*
 
 re: down fclean up
 
