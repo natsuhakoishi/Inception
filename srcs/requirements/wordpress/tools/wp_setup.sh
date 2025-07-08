@@ -35,7 +35,7 @@ then
 	$WP_USER $WP_EMAIL --user_pass=$WP_PASS \
 	--role=author --allow-root
 
-	wp theme install twentytwentytwo --activate --allow-root
+	wp install theme twentytwentytwo --activate --allow-root
 fi
 
 sed -i 's;listen = /run/php/php7.4-fpm.sock;listen = 9000;' /etc/php/7.4/fpm/pool.d/www.conf
