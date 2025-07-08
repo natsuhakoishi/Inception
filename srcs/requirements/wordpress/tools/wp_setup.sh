@@ -7,49 +7,38 @@ then
 	mv wp-cli.phar /usr/local/bin/wp
 fi
 
-until wp db check --path=/var/www/html/wordpress --allow-root > /dev/null 2>&1
-do
-  echo "Waiting for mariadb..."
-  sleep 2
-done
+if [ ! -d "/var/www/html/wordpress" ];
+then
+	mkdir -p /var/www/html/wordpress
+fi
 
-mkdir -p /var/www/html/wordpress
-
-if [ ! -f "/var/www/html/wordpress/wp-config.php" ];
+if [ -z "$(ls -A /var/www/html/wordpress)" ];
 then
 	wp core download --path=/var/www/html/wordpress --allow-root
 	echo "Wordpress Core Downloaded"
 
 	wp core config --path=/var/www/html/wordpress \
-		--dbhost=mariadb \
-		--dbname=$DB_NAME \
-		--dbuser=$DB_USER \
-		--dbpass=$DB_UPASS \
-		--allow-root
-	echo "wp-config.php Created"
-fi
+	--dbhost=mariadb --dbname=$DB_NAME \
+	--dbuser=$DB_USER --dbpass=$DB_PASS \
+	--allow_root
+	echo "wp-config created"
 
-if ! wp core is-installed --path=/var/www/html/wordpress --allow-root;
-then
+	chmod 644 /requirements/wordpress/wpf/wp-config.php
+
 	wp core install --path=/var/www/html/wordpress \
-		--url=$DOMAIN_NAME \
-		--title="I hate Inception" \
-		--admin_name=$WP_ADMIN \
-		--admin_password=$WP_APASS \
-		--admin_email=$WP_EA \
-		--allow-root
-	echo "Wordpress Installed"
+	--url=localhost --title="I hate Inception" \
+	--admin_name=$WP_ADMIN_USER --admin_password=$WP_ADMIN_PASS \
+	--admin_email=$WP_ADMIN_EMAIL --allow-root
+	echo "Wordpress Core Installed"
 
 	wp user create --path=/var/www/html/wordpress \
-		$WP_USER $WP_UEA --user_pass=$WP_UPASS \
-		--role=author --allow-root
-	echo "Wordpress User Created"
+	$WP_USER $WP_EMAIL --user_password=$WP_PASS \
+	--role=author --allow-root
 
-	wp theme install twentytwentytwo --activate --allow-root
-	echo "Wordpress Theme Installed and Activated"
+	wp install theme twentytwentytwo --activate --allow-root
 fi
 
-sed -i 's|listen = /run/php/php7.4-fpm.sock|listen = 9000|' /etc/php/7.4/fpm/pool.d/www.conf
+sed -i 's;listen = /run/php/php7.4-fpm.sock;listen = 9000;' /etc/php/7.4/fpm/pool.d/www.conf
 
 mkdir -p /run/php
 

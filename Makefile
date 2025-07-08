@@ -1,29 +1,41 @@
-all: up
+DC := ./srcs/docker-compose.yml
+
+MOUNTPOINT = /home/yyean-wa/data
+WP_DB_DIR = /wordpress_database
+WP_FL_DIR = /wordpress_files
+
+all: re
+
+build:
+	if [ ! -d $(MOUNTPOINT)$(WP_DB_DIR) ]; then\
+		mkdir -p $(MOUNTPOINT)$(WP_DB_DIR);\
+	fi
+	if [ ! -d $(MOUNTPOINT)$(WP_FL_DIR) ]; then\
+		mkdir -p $(MOUNTPOINT)$(WP_FL_DIR);\
+	fi
+
+	docker compose -f $(DC) build
 
 up:
-	docker compose -f ./srcs/docker-compose.yml up -d
+	docker compose -f $(DC) up -d
 
 down:
-	docker compose -f ./srcs/docker-compose.yml down
+	docker compose -f $(DC) down
 
-stop:
-	docker compose -f ./srcs/docker-compose.yml stop
-
-start:
-	docker compose -f ./srcs/docker-compose.yml start
-
-status:
+ps:
 	docker ps
 
 clean:
-	docker compose -f ./srcs/docker-compose.yml down -v --remove-orphans
-	docker image prune -af
-	docker volume prune -f
-	docker network prune -f
+	docker system prune
 
-fclean: clean
+fclean:
+	docker stop $(shell docker ps -qa) 2>/dev/null || true
+	docker rm $(shell docker ps -qa) 2>/dev/null || true
+	docker rmi $(shell docker images -qa) 2>/dev/null || true
+	docker volume rm $(shell docker volume ls -q) 2>/dev/null || true
+	docker network rm $(shell docker network ls -q) 2>/dev/null || true
 
-re: fclean all
+re: down fclean up
 
 # VM
 # scp -r ~/42cp/wip/Inception natsuhakoishi@192.168.1.127:~/	           //send file to VM
