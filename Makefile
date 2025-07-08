@@ -28,16 +28,16 @@ ps:
 clean:
 	docker system prune
 
-fclean:
+vclean:
+	sudo rm -rf /home/yyean-wa/data/wordpress_database/*
+	sudo rm -rf /home/yyean-wa/data/wordpress_files/*
+
+fclean: vclean
 	docker stop $(shell docker ps -qa) 2>/dev/null || true
 	docker rm $(shell docker ps -qa) 2>/dev/null || true
 	docker rmi $(shell docker images -qa) 2>/dev/null || true
 	docker volume rm $(shell docker volume ls -q) 2>/dev/null || true
 	docker network rm $(shell docker network ls -q) 2>/dev/null || true
-
-vclean:
-	sudo rm -rf /home/yyean-wa/data/wordpress_database/*
-	sudo rm -rf /home/yyean-wa/data/wordpress_files/*
 
 re: down fclean up
 
