@@ -26,7 +26,7 @@ then
 	chmod 644 /requirements/wordpress/wpf/wp-config.php
 
 	wp core install --path=/var/www/html/wordpress \
-	--url=https://yyean-wa.42.fr --title="I hate Inception" \
+	--url=$DOMAIN_NAME --title="I hate Inception" \
 	--admin_name=$WP_ADMIN_USER --admin_password=$WP_ADMIN_PASS \
 	--admin_email=$WP_ADMIN_EMAIL --allow-root
 	echo "Wordpress Core Installed"
