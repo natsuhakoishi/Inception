@@ -2,10 +2,6 @@ FROM debian:bullseye
 
 RUN apt-get update && apt-get install -y mariadb-server
 
-COPY ./tools/mariadb_setup.sh /mariadb_setup.sh
+COPY . .
 
-RUN chmod +x /mariadb_setup.sh
-
-EXPOSE 3306
-
-ENTRYPOINT ["/mariadb_setup.sh"]
+CMD ["/bin/bash", "/tools/mariadb_setup.sh"]
