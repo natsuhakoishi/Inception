@@ -23,7 +23,7 @@ then
 	--allow-root
 	echo "wp-config created"
 
-	chmod 644 /requirements/wordpress/wp-config.php
+	chmod 644 /requirements/wordpress/wpf/wp-config.php
 
 	wp core install --path=/var/www/html/wordpress \
 	--url=localhost --title="I hate Inception" \
@@ -32,7 +32,7 @@ then
 	echo "Wordpress Core Installed"
 
 	wp user create --path=/var/www/html/wordpress \
-	$WP_USER $WP_EMAIL --user_password=$WP_PASS \
+	$WP_USER $WP_EMAIL --user_pass=$WP_PASS \
 	--role=author --allow-root
 
 	wp theme install twentytwentytwo --activate --allow-root
