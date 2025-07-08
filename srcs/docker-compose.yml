@@ -1,18 +1,5 @@
 services:
 
-  mariadb:
-    build: ./requirements/mariadb
-    container_name: mariadb
-    env_file: .env
-    working_dir: /requirements/mariadb
-    volumes:
-      - wordpress_database:/var/lib/mysql
-    networks:
-      - inception
-    restart: always
-    expose:
-      - 3306
-
   nginx:
     build: ./requirements/nginx
     container_name: nginx
@@ -28,11 +15,24 @@ services:
     expose:
       - 9000
 
+  mariadb:
+    build: ./requirements/mariadb
+    container_name: mariadb
+    env_file: .env
+    working_dir: /requirements/mariadb
+    volumes:
+      - wordpress_database:/var/lib/mysql
+    networks:
+      - inception
+    restart: always
+    expose:
+      - 3306
+
   wordpress:
     build: ./requirements/wordpress
     container_name: wordpress
     env_file: .env
-    working_dir: /requirments/wordpress
+    working_dir: /requirements/wordpress
     volumes:
       - wordpress_files:/var/www/html/wordpress
     networks:
@@ -41,7 +41,6 @@ services:
     expose:
      - 3306
      - 9000
-
 
 volumes:
   wordpress_database:

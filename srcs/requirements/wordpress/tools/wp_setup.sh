@@ -20,10 +20,10 @@ then
 	wp core config --path=/var/www/html/wordpress \
 	--dbhost=mariadb --dbname=$DB_NAME \
 	--dbuser=$DB_USER --dbpass=$DB_PASS \
-	--allow_root
+	--allow-root
 	echo "wp-config created"
 
-	chmod 644 /requirements/wordpress/wpf/wp-config.php
+	chmod 644 /requirements/wordpress/wp-config.php
 
 	wp core install --path=/var/www/html/wordpress \
 	--url=localhost --title="I hate Inception" \
@@ -35,7 +35,7 @@ then
 	$WP_USER $WP_EMAIL --user_password=$WP_PASS \
 	--role=author --allow-root
 
-	wp install theme twentytwentytwo --activate --allow-root
+	wp theme install twentytwentytwo --activate --allow-root
 fi
 
 sed -i 's;listen = /run/php/php7.4-fpm.sock;listen = 9000;' /etc/php/7.4/fpm/pool.d/www.conf
