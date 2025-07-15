@@ -48,3 +48,8 @@ re: down fclean up
 
 # docker
 # docker ps (ls container)
+# docker exec -it <container> bash
+
+# mariadb
+# mysql -u root -p
+# SELECT / USE
